@@ -5,7 +5,6 @@ import (
 	"strconv"
 	"time"
 	"log"
-	"reflect"
 
 	"github.com/jinzhu/gorm"
 )
@@ -22,7 +21,9 @@ type Log struct {
 	NameService  string `gorm:"not null" json:"name_service"`
 	ResponseTime string `gorm:"not null" json:"response_time"`
 	UserAgent    string `gorm:"null" json:"user_agent"`
+	Status  	 bool `gorm:"not null" json:"status"`
 }
+
 
 // Get last Order 20 items every five
 func (Log *Log) TableName() string {
@@ -71,14 +72,14 @@ func (l *Log) FindAllPosts(db *gorm.DB) (*[]Log, error) {
 	
 	last := fmt.Sprintf("%d%s%s%s%s%s%d%s%s%s%s", y, "-", aMois, "-", aDay, " ", h, ":", aMin, ":", "00")
 	preview := fmt.Sprintf("%d%s%s%s%s%s%d%s%s%s%s", y, "-", aMois, "-", aDay, " ", h - 1, ":", aMin, ":", "00")
-	err = db.Debug().Model(&Log{}).Where("date_request BETWEEN ? AND ?", preview, last).Order("date_request desc").Limit(10).Find(&posts).Error
+	err = db.Debug().Model(&Log{}).Where("date_request BETWEEN ? AND ? AND name_service <> ? ", preview, last,"tracking").Order("date_request desc").Limit(100).Find(&posts).Error
 
 	if err != nil {
 		return &[]Log{}, err
 	}
 
 	if len(posts) > 0 {
-		fmt.Println(reflect.TypeOf(posts))
+		fmt.Println(len(posts))
 	}
 	return &posts, nil
 }
