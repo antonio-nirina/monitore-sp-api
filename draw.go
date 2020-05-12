@@ -33,9 +33,6 @@ func main() {
 	p0.SetRect(0, 0, 50, 15)
 	p0.AxesColor = ui.ColorWhite
 	p0.LineColors[0] = ui.ColorGreen
-
-	
-
 	ui.Render(p0)
 
 	uiEvents := ui.PollEvents()

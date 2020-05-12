@@ -48,7 +48,7 @@ func (l *Log) FindAllPosts(db *gorm.DB) (*[]Log, error) {
 	var aMois string
 	var aDay string
 	
-	inf := [12]string{"January","February","March","April","May","June","July","August","September","October","November","December"}
+	inf := [...]string{"January","February","March","April","May","June","July","August","September","October","November","December"}
 
 	for i := 0; i < len(inf); i++ {
 		if inf[i] == m.String() && i < 10{
