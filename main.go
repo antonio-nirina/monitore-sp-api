@@ -3,18 +3,20 @@ package main
 import (
 	"fmt"
 	"log"
+	"time"
+	//"reflect"
 
 	"github.com/antonio-nirina/monitore-sp-api/config"
 	"github.com/antonio-nirina/monitore-sp-api/model"
 )
 
 type StartDate struct {
-    Year     int `json:"year"`
-    Month    int `json:"month"`
-    Day      int `json:"day"`
-    Hour     int `json:"hour"`
-    Minute   int `json:"minute"`
-    Second   int `json:"second"`
+	Year   int `json:"year"`
+	Month  int `json:"month"`
+	Day    int `json:"day"`
+	Hour   int `json:"hour"`
+	Minute int `json:"minute"`
+	Second int `json:"second"`
 }
 
 type Data struct {
@@ -27,8 +29,8 @@ var graph []Data
 var absc = make(map[string]interface{})
 var array []interface{}
 
-func mainnn() {
-	err,process := config.Connected()
+func main() {
+	err, process := config.Connected()
 
 	if err != nil {
 		log.Fatal("database not Connected")
@@ -41,11 +43,12 @@ func mainnn() {
 		log.Fatal("error request")
 	}
 
-	for _,val := range *logs{
-		absc["date"] = val.DateRequest
-		absc["out"] = val.Output
+	for _, val := range *logs {
+		t, _ := time.Parse(time.RFC3339, val.DateRequest)
+		absc["date"] = t.Format("20060102150405") // timestamp Go
+		// absc["out"] = val.Output
 		absc["status"] = val.Status
-		array = append(array,absc)
+		array = append(array, absc)
 	}
 
 	fmt.Println(array)
