@@ -29,7 +29,7 @@ var graph []Data
 var absc = make(map[string]interface{})
 var array []interface{}
 
-func main() {
+func mainjj() {
 	err, process := config.Connected()
 
 	if err != nil {
