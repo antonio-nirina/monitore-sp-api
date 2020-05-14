@@ -24,6 +24,11 @@ type Log struct {
 	Status  	 bool `gorm:"not null" json:"status"`
 }
 
+type User struct {
+	Lastname        string `gorm:"not null" json:"lastnaml"`
+	Firstname        string `gorm:"not null" json:"firstname"`
+}
+
 type Response struct {
 	Uid string `gorm:"not null" json:"uid"`
 	TypeEnveloppe string `gorm:"not null" json:"type_enveloppe"`

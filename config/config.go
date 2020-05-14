@@ -31,7 +31,7 @@ func Connected()(error, Process) {
 	dbUser := os.Getenv("DB_USER")
 	host := os.Getenv("DB_HOST")
 
-	_uri := fmt.Sprintf("%s:%s@(%s)/%s?charset=utf8&parseTime=True&loc=Local", dbUser, dbPwd, host, dbName)
+	_uri := getUri(dbUser, dbPwd, host, dbName)
 	process.DB, err = gorm.Open("mysql", _uri)
 
 	if err != nil {
@@ -39,6 +39,39 @@ func Connected()(error, Process) {
 	} 
 
 	process.DB.AutoMigrate(&model.Log{})
+
+	return nil, process
+}
+
+func getUri(dbUser, dbPwd, host, dbName string) string{
+	uri := fmt.Sprintf("%s:%s@(%s)/%s?charset=utf8&parseTime=True&loc=Local", dbUser, dbPwd, host, dbName)
+
+	return uri
+	
+}
+
+func ConnectedGraph()(error, Process){
+	err := godotenv.Load()
+	process := Process{}
+
+	if err != nil {
+		log.Fatal("Error loading .env file",err)
+		return err,process
+	}
+
+	dbName := os.Getenv("DATABASE_GRAPH")
+	dbPwd := os.Getenv("DB_PWD_GRAPH")
+	dbUser := os.Getenv("DB_USER_GRAPH")
+	host := os.Getenv("DB_HOST_GRAPH")
+
+	_uri := getUri(dbUser, dbPwd, host, dbName)
+	process.DB, err = gorm.Open("mysql", _uri)
+
+	if err != nil {
+		return err,process
+	} 
+
+	process.DB.AutoMigrate(&model.User{})
 
 	return nil, process
 }

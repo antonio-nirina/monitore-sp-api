@@ -1,4 +1,4 @@
-package graphql
+package mutations
 
 import (
 	"github.com/graphql-go/graphql"

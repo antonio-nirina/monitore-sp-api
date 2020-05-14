@@ -1,7 +1,8 @@
-package graphql
+package queries
 
 import (
-	"../types"
+
+	"github.com/antonio-nirina/monitore-sp-api/graphql/types"
 
 	"github.com/graphql-go/graphql"
 )

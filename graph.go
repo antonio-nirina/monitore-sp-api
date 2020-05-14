@@ -5,7 +5,8 @@ import(
 	"log"
 	"net/http"
 
-	"github.com/antonio-nirina/monitore-sp-api/graphql"
+	"github.com/antonio-nirina/monitore-sp-api/graphql/mutations"
+	"github.com/antonio-nirina/monitore-sp-api/graphql/queries"
 	"github.com/graphql-go/graphql"
 	"github.com/graphql-go/handler"
 )
