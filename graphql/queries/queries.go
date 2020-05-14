@@ -1,0 +1,11 @@
+package graphql
+
+import (
+	"github.com/graphql-go/graphql"
+)
+
+func GetRootFields() graphql.Fields {
+	return graphql.Fields{
+		"user": GetUserQuery(),
+	}
+}

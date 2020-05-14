@@ -10,6 +10,8 @@ require (
 	github.com/gizak/termui/v3 v3.1.0
 	github.com/go-sql-driver/mysql v1.5.0 // indirect
 	github.com/gorilla/mux v1.7.4
+	github.com/graphql-go/graphql v0.7.9
+	github.com/graphql-go/handler v0.2.3
 	github.com/jinzhu/gorm v1.9.12
 	github.com/joho/godotenv v1.3.0
 	github.com/mattn/go-runewidth v0.0.9 // indirect
