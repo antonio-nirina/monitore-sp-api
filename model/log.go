@@ -15,13 +15,26 @@ type Log struct {
 	Id           int    `gorm:"primary_key;auto_increment" json:"id"`
 	DateRequest  string `gorm:"not null" json:"date_request"`
 	Input        string `gorm:"not null" json:"input"`
-	Output       string `gorm:"not null" json:"output"`
+	Output       string `gorm:"not null" json:"output"` //Response
 	ApiKey       string `gorm:"not null" json:"api_key"`
 	IpAdress     string `gorm:"not null" json:"ip_address"`
 	NameService  string `gorm:"not null" json:"name_service"`
 	ResponseTime string `gorm:"not null" json:"response_time"`
 	UserAgent    string `gorm:"null" json:"user_agent"`
 	Status  	 bool `gorm:"not null" json:"status"`
+}
+
+type Response struct {
+	Uid string `gorm:"not null" json:"uid"`
+	TypeEnveloppe string `gorm:"not null" json:"type_enveloppe"`
+	Enveloppe string `gorm:"not null" json:"enveloppe"`
+	AdresseExpedition string `gorm:"not null" json:"adresse_expedition"`
+	AdresseDestination string `gorm:"not null" json:"adresse_destination"`
+	Fichier string `gorm:"not null" json:"fichier"`
+	FichierPrevisualisation string `gorm:"not null" json:"fichier_previsualisation"`
+	Variables string `gorm:"not null" json:"variables"`
+	FichierAnnexes string `gorm:"not null" json:"fichier_annexes"`
+
 }
 
 
@@ -79,7 +92,7 @@ func (l *Log) FindAllPosts(db *gorm.DB) (*[]Log, error) {
 	}
 
 	if len(posts) > 0 {
-		fmt.Println(len(posts))
+		fmt.Println("posts")
 	}
 	return &posts, nil
 }

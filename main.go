@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"time"
+	"encoding/json"
 	//"reflect"
 
 	"github.com/antonio-nirina/monitore-sp-api/config"
@@ -29,7 +30,7 @@ var graph []Data
 var absc = make(map[string]interface{})
 var array []interface{}
 
-func mainjj() {
+func main() {
 	err, process := config.Connected()
 
 	if err != nil {
@@ -46,8 +47,9 @@ func mainjj() {
 	for _, val := range *logs {
 		t, _ := time.Parse(time.RFC3339, val.DateRequest)
 		absc["date"] = t.Format("20060102150405") // timestamp Go
-		// absc["out"] = val.Output
-		absc["status"] = val.Status
+		out,_ := json.Marshal(val.Output)
+		absc["out"] = string(out)
+		//absc["status"] = val.Status
 		array = append(array, absc)
 	}
 
