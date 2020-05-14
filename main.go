@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 	"time"
-	"encoding/json"
+	//"encoding/json"
 	//"reflect"
 
 	"github.com/antonio-nirina/monitore-sp-api/config"
@@ -47,8 +47,7 @@ func main() {
 	for _, val := range *logs {
 		t, _ := time.Parse(time.RFC3339, val.DateRequest)
 		absc["date"] = t.Format("20060102150405") // timestamp Go
-		out,_ := json.Marshal(val.Output)
-		absc["out"] = string(out)
+		absc["out"] = val.Output
 		//absc["status"] = val.Status
 		array = append(array, absc)
 	}
