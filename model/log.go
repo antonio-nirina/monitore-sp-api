@@ -2,9 +2,10 @@ package model
 
 import (
 	"fmt"
+	"log"
+	// "reflect"
 	"strconv"
 	"time"
-	"log"
 
 	"github.com/jinzhu/gorm"
 )
@@ -21,27 +22,25 @@ type Log struct {
 	NameService  string `gorm:"not null" json:"name_service"`
 	ResponseTime string `gorm:"not null" json:"response_time"`
 	UserAgent    string `gorm:"null" json:"user_agent"`
-	Status  	 bool `gorm:"not null" json:"status"`
+	Status       bool   `gorm:"not null" json:"status"`
 }
 
 type User struct {
-	Lastname        string `gorm:"not null" json:"lastnaml"`
-	Firstname        string `gorm:"not null" json:"firstname"`
+	Lastname  string `gorm:"not null" json:"lastnaml"`
+	Firstname string `gorm:"not null" json:"firstname"`
 }
 
 type Response struct {
-	Uid string `gorm:"not null" json:"uid"`
-	TypeEnveloppe string `gorm:"not null" json:"type_enveloppe"`
-	Enveloppe string `gorm:"not null" json:"enveloppe"`
-	AdresseExpedition string `gorm:"not null" json:"adresse_expedition"`
-	AdresseDestination string `gorm:"not null" json:"adresse_destination"`
-	Fichier string `gorm:"not null" json:"fichier"`
+	Uid                     string `gorm:"not null" json:"uid"`
+	TypeEnveloppe           string `gorm:"not null" json:"type_enveloppe"`
+	Enveloppe               string `gorm:"not null" json:"enveloppe"`
+	AdresseExpedition       string `gorm:"not null" json:"adresse_expedition"`
+	AdresseDestination      string `gorm:"not null" json:"adresse_destination"`
+	Fichier                 string `gorm:"not null" json:"fichier"`
 	FichierPrevisualisation string `gorm:"not null" json:"fichier_previsualisation"`
-	Variables string `gorm:"not null" json:"variables"`
-	FichierAnnexes string `gorm:"not null" json:"fichier_annexes"`
-
+	Variables               string `gorm:"not null" json:"variables"`
+	FichierAnnexes          string `gorm:"not null" json:"fichier_annexes"`
 }
-
 
 // Get last Order 20 items every five
 func (Log *Log) TableName() string {
@@ -51,7 +50,7 @@ func (Log *Log) TableName() string {
 func (l *Log) FindAllPosts(db *gorm.DB) (*[]Log, error) {
 	var err error
 	posts := []Log{}
-	loc,err := time.LoadLocation("Europe/Paris")
+	loc, err := time.LoadLocation("Europe/Paris")
 
 	if err != nil {
 		log.Fatal("error location")
@@ -65,16 +64,16 @@ func (l *Log) FindAllPosts(db *gorm.DB) (*[]Log, error) {
 	var aMin string
 	var aMois string
 	var aDay string
-	
-	inf := [...]string{"January","February","March","April","May","June","July","August","September","October","November","December"}
+
+	inf := [...]string{"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"}
 
 	for i := 0; i < len(inf); i++ {
-		if inf[i] == m.String() && i < 10{
+		if inf[i] == m.String() && i < 10 {
 			aMois = fmt.Sprintf("%s%d", "0", i+1)
-		} else if(inf[i] == m.String() && i > 9) {
-			aMois = strconv.Itoa(i+1)
+		} else if inf[i] == m.String() && i > 9 {
+			aMois = strconv.Itoa(i + 1)
 		}
-	} 
+	}
 
 	if d < 10 {
 		aDay = fmt.Sprintf("%s%s", "0", strconv.Itoa(d))
@@ -87,17 +86,18 @@ func (l *Log) FindAllPosts(db *gorm.DB) (*[]Log, error) {
 	} else {
 		aMin = strconv.Itoa(min)
 	}
-	
+
 	last := fmt.Sprintf("%d%s%s%s%s%s%d%s%s%s%s", y, "-", aMois, "-", aDay, " ", h, ":", aMin, ":", "00")
-	preview := fmt.Sprintf("%d%s%s%s%s%s%d%s%s%s%s", y, "-", aMois, "-", aDay, " ", h - 1, ":", aMin, ":", "00")
-	err = db.Debug().Model(&Log{}).Where("date_request BETWEEN ? AND ? AND name_service <> ? ", preview, last,"tracking").Order("date_request desc").Limit(100).Find(&posts).Error
+	preview := fmt.Sprintf("%d%s%s%s%s%s%d%s%s%s%s", y, "-", aMois, "-", aDay, " ", h-1, ":", aMin, ":", "00")
+	err = db.Debug().Model(&Log{}).Where("date_request BETWEEN ? AND ? AND name_service <> ? AND name_service <> ?", preview, last, "tracking", "letter_pricing").Order("date_request desc").Limit(2).Find(&posts).Error
 
 	if err != nil {
 		return &[]Log{}, err
 	}
 
-	if len(posts) > 0 {
-		fmt.Println("posts")
-	}
 	return &posts, nil
+}
+
+func postsHandler(posts []Log) {
+	fmt.Println("pp5", posts[0].Output)
 }
