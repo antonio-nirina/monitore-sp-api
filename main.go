@@ -30,7 +30,7 @@ var graph []Data
 var absc = make(map[string]interface{})
 var array []interface{}
 
-func mainaa() {
+func mainvv() {
 	err, process := config.Connected()
 
 	if err != nil {
@@ -44,13 +44,18 @@ func mainaa() {
 		log.Fatal("error request")
 	}
 
-	for _, val := range *logs {
-		t, _ := time.Parse(time.RFC3339, val.DateRequest)
-		absc["date"] = t.Format("20060102150405") // timestamp Go
-		absc["out"] = val.Output
-		//absc["status"] = val.Status
-		array = append(array, absc)
+	if len(*logs) > 0 {
+		for _, val := range *logs {
+			t, _ := time.Parse(time.RFC3339, val.DateRequest)
+			absc["id"] = val.Id
+			absc["date"] = t.Format("20060102150405") // timestamp Go
+			absc["apiKey"] = val.ApiKey
+			absc["nameService"] = val.NameService
+			absc["status"] = val.Status
+			array = append(array, absc)
+		}
+		fmt.Println(array)
 	}
 
-	fmt.Println(array)
+	fmt.Println("array")
 }

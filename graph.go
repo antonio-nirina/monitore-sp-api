@@ -1,6 +1,6 @@
 package main
 
-import(
+import (
 	"fmt"
 	"log"
 	"net/http"
@@ -11,27 +11,27 @@ import(
 	"github.com/graphql-go/handler"
 )
 
-func main(){
+func mainfff() {
 	schemaConfig := graphql.SchemaConfig{
-	  Query: graphql.NewObject(graphql.ObjectConfig{
-	    Name:   "RootQuery",
-	    Fields: queries.GetRootFields(),
-	  }),
-	  Mutation: graphql.NewObject(graphql.ObjectConfig{
-	    Name:   "RootMutation",
-	    Fields: mutations.GetRootFields(),
-	  }),
+		Query: graphql.NewObject(graphql.ObjectConfig{
+			Name:   "RootQuery",
+			Fields: queries.GetRootFields(),
+		}),
+		Mutation: graphql.NewObject(graphql.ObjectConfig{
+			Name:   "RootMutation",
+			Fields: mutations.GetRootFields(),
+		}),
 	}
 
 	schema, err := graphql.NewSchema(schemaConfig)
 
 	if err != nil {
-	  log.Fatalf("Failed to create new schema, error: %v", err)
+		log.Fatalf("Failed to create new schema, error: %v", err)
 	}
 
 	httpHandler := handler.New(&handler.Config{
-	  	Schema: &schema,
-		Pretty: true,
+		Schema:   &schema,
+		Pretty:   true,
 		GraphiQL: true,
 	})
 

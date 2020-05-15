@@ -1,15 +1,15 @@
 package main
 
 import (
+	//"fmt"
 	"log"
 	"math"
-	//"fmt"
 
 	ui "github.com/gizak/termui/v3"
 	"github.com/gizak/termui/v3/widgets"
 )
 
-func maindd() {
+func main() {
 	if err := ui.Init(); err != nil {
 		log.Fatalf("failed to initialize termui: %v", err)
 	}
@@ -26,15 +26,24 @@ func maindd() {
 		}
 		return data
 	}()
-	// Stat error if exist previsualisation : 
+
+	/*sinData := func() [][]float64 {
+		data := make([][]float64, 2)
+		data[0] = append(data[0], 0.5, 0.9, 0.6, 0.4, 0.2, 0.66, 0.88)
+		data[1] = append(data[0], 0, 0, 0, 0, 0, 0, 0)
+		//fmt.Println(data)
+		return data
+	}()*/
+
+	// Stat error if exist previsualisation :
 	// Nombres: 20
 	// Error 500: 0 ou 2
 	// Client: Harmonie
 	p := widgets.NewParagraph()
-    p.Text = "Hello World!"
-    p.SetRect(3, 0, 12, 15)
-    ui.Render(p)
-    // Plot service Direct and Previsualisation
+	p.Text = "Hello World!"
+	p.SetRect(3, 0, 12, 15)
+	ui.Render(p)
+	// Plot service Direct and Previsualisation
 	p0 := widgets.NewPlot()
 	p0.Title = "braille-mode Line Chart"
 	p0.Data = sinData
