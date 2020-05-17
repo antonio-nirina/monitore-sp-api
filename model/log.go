@@ -25,8 +25,8 @@ type Log struct {
 	Status       bool   `gorm:"not null" json:"status"`
 }
 
-type User struct {
-	Lastname  string `gorm:"not null" json:"lastnaml"`
+type Users struct {
+	Lastname  string `gorm:"not null" json:"lastname"`
 	Firstname string `gorm:"not null" json:"firstname"`
 }
 

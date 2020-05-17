@@ -9,7 +9,7 @@ import (
 	"github.com/gizak/termui/v3/widgets"
 )
 
-func main() {
+func maindd() {
 	if err := ui.Init(); err != nil {
 		log.Fatalf("failed to initialize termui: %v", err)
 	}
