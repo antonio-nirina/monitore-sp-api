@@ -89,7 +89,7 @@ func (l *Log) FindAllPosts(db *gorm.DB) (*[]Log, error) {
 
 	last := fmt.Sprintf("%d%s%s%s%s%s%d%s%s%s%s", y, "-", aMois, "-", aDay, " ", h, ":", aMin, ":", "00")
 	preview := fmt.Sprintf("%d%s%s%s%s%s%d%s%s%s%s", y, "-", aMois, "-", aDay, " ", h-1, ":", aMin, ":", "00")
-	err = db.Debug().Model(&Log{}).Where("date_request BETWEEN ? AND ? AND name_service <> ? AND name_service <> ?", preview, last, "tracking", "letter_pricing").Order("date_request desc").Limit(2).Find(&posts).Error
+	err = db.Debug().Model(&Log{}).Where("date_request BETWEEN ? AND ? AND name_service <> ? AND name_service <> ?", preview, last, "tracking", "letter_pricing").Order("date_request desc").Limit(10).Find(&posts).Error
 
 	if err != nil {
 		return &[]Log{}, err
