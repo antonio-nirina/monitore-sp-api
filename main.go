@@ -26,11 +26,11 @@ type Data struct {
 }
 
 var logPost = model.Log{}
-var graph []Data
+var graph = [...]int{}
 var absc = make(map[string]interface{})
 var array []interface{}
 
-func main() {
+func mainnn() {
 	err, process := config.Connected()
 
 	if err != nil {
@@ -51,10 +51,17 @@ func main() {
 			absc["date"] = t.Format("20060102150405") // timestamp Go
 			absc["apiKey"] = val.ApiKey
 			absc["nameService"] = val.NameService
-			absc["status"] = val.Status
+
+			if !val.Status {
+				graph = append(graph, 0)
+			} else {
+				graph = append(graph, 1)
+			}
+
 			array = append(array, absc)
 		}
 		fmt.Println(array)
+		fmt.Println(graph)
 	}
 
 	fmt.Println("array")
