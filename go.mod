@@ -3,6 +3,7 @@ module github.com/antonio-nirina/monitore-sp-api
 go 1.13
 
 require (
+	fyne.io/fyne v1.2.4 // indirect
 	github.com/VividCortex/gohistogram v1.0.0 // indirect
 	github.com/alecthomas/units v0.0.0-20190924025748-f65c72e2690d // indirect
 	github.com/andrew-d/go-termutil v0.0.0-20150726205930-009166a695a2 // indirect
