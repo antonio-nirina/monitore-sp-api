@@ -26,7 +26,7 @@ type Data struct {
 }
 
 var logPost = model.Log{}
-var graph = [...]int{}
+var graph []int
 var absc = make(map[string]interface{})
 var array []interface{}
 
