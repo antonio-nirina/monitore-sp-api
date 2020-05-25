@@ -7,4 +7,5 @@ https://github.com/eko/graphql-go-structure
 https://github.com/kathgironpe/cpp-exercises
 
 https://github.com/vbauerster
+https://github.com/mhewedy-playground/Golang-Redis-WebSocket-ChatServer
 
