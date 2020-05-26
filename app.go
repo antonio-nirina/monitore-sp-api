@@ -4,28 +4,34 @@ import (
 	"fmt"
 
 	"fyne.io/fyne"
+	// "fyne.io/fyne/layout"
 	"fyne.io/fyne/widget"
 	"fyne.io/fyne/app"
 )
 
-type Fall struct {
-	nMenu  *fyne.MainMenu
+type Plot struct {
+	output  *widget.Label
+	window  fyne.Window
 }
 
-// var aFal = Fall{}
+var p = Plot{}
 // var Item []*fyne.MenuItem
+var ap = app.New()
 
 func main() {
 	size := fyne.NewSize(500,200)
-	app := app.New()
-	w := app.NewWindow("Hello")
+	// sizeIn := fyne.NewSize(50,20)
+	p.output = widget.NewLabel("")
+	w := ap.NewWindow("Hello")
 	w.Resize(size)
 	w.SetMainMenu(createMainMenu())
-	w.SetContent(widget.NewVBox(
+	w.SetContent(
+		widget.NewVBox(
 		widget.NewLabel("Hello Fyne!"),
-		widget.NewButton("Quit", func() {
-			app.Quit()
-		}),
+		p.output,
+		/*widget.NewButton("Quit", func() {
+			ap.Quit()
+		}),*/
 	))
 
 	w.ShowAndRun()
@@ -33,10 +39,10 @@ func main() {
 
 func createMainMenu() *fyne.MainMenu {
 	ItemM := fyne.NewMenuItem("Cours",func(){
-		fmt.Println("Ok Ok")
+		widget.NewLabel("Ok ok")
 	})
 	equation := fyne.NewMenuItem("Equation",func(){
-		fmt.Println("Ok Ok")
+		p.output.SetText("Ok ok")
 	})
 	plot := fyne.NewMenuItem("Plot",func(){
 		fmt.Println("Ok Ok")
