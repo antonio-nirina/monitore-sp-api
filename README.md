@@ -8,4 +8,6 @@ https://github.com/kathgironpe/cpp-exercises
 
 https://github.com/vbauerster
 https://github.com/mhewedy-playground/Golang-Redis-WebSocket-ChatServer
+https://github.com/videolan/vlc
+https://medium.com/better-programming/10-extraordinary-github-repos-for-all-developers-939cdeb28ad0
 
