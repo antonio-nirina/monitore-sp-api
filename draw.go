@@ -39,6 +39,8 @@ func maindd() {
 	// Nombres: 20
 	// Error 500: 0 ou 2
 	// Client: Harmonie
+	array := make([]float64,2)
+	array = append(array, testData)
 	p := widgets.NewParagraph()
 	p.Text = "Hello World!"
 	p.SetRect(3, 0, 12, 15)

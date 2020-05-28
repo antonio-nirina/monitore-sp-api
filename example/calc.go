@@ -118,7 +118,8 @@ func (c *calc) loadUI(app fyne.App) {
 
 	c.window = app.NewWindow("Calc")
 	c.window.SetIcon(icon.CalculatorBitmap)
-	c.window.SetContent(fyne.NewContainerWithLayout(layout.NewGridLayout(1),
+	c.window.SetContent(
+		fyne.NewContainerWithLayout(layout.NewGridLayout(1),
 		c.output,
 		fyne.NewContainerWithLayout(layout.NewGridLayout(4),
 			c.charButton('+'),
