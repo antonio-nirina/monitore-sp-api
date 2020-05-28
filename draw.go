@@ -1,15 +1,15 @@
 package main
 
 import (
-	"fmt"
 	"log"
+
 	//"math"
 
 	ui "github.com/gizak/termui/v3"
 	"github.com/gizak/termui/v3/widgets"
 )
 
-func maindd() {
+func mainss() {
 	if err := ui.Init(); err != nil {
 		log.Fatalf("failed to initialize termui: %v", err)
 	}
@@ -27,11 +27,11 @@ func maindd() {
 		return data
 	}()*/
 
-	testData := func() []float64 {
-		obj := make([]float64, 2)
-		obj = append(obj, 1, 1, 1, 1, 1, 1, 1) // append(obj[0], 0.5, 0.9, 0.6, 0.4, 0.2, 0.66, 0.88)
-		//obj[1] = append(obj[1], )
-		//fmt.Println(data)
+	testData := func() [][]float64 {
+		obj := make([][]float64, 2)
+		obj[0] = make([]float64, 2)
+		obj[1] = make([]float64, 2)
+		obj[0] = append(obj[0], 1, 1, 1, 1, 1, 1, 1)
 		return obj
 	}()
 
@@ -39,8 +39,6 @@ func maindd() {
 	// Nombres: 20
 	// Error 500: 0 ou 2
 	// Client: Harmonie
-	array := make([]float64,2)
-	array = append(array, testData)
 	p := widgets.NewParagraph()
 	p.Text = "Hello World!"
 	p.SetRect(3, 0, 12, 15)
@@ -53,8 +51,6 @@ func maindd() {
 	p0.AxesColor = ui.ColorWhite
 	p0.LineColors[0] = ui.ColorRed
 	ui.Render(p0)
-	fmt.Println(testData)
-	//fmt.Println(sinData)
 
 	uiEvents := ui.PollEvents()
 	for {
