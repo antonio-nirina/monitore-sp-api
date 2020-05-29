@@ -23,19 +23,19 @@ type StartDate struct {
 }
 
 type DataResp struct {
-	Id int
-	Apikey string
-	Email string
-	StatusLog string
-	DateError string
+	Id          int
+	Apikey      string
+	Email       string
+	StatusLog   string
+	Date        string
 	NameService string
-	StatusInit bool
+	StatusInit  bool
 }
 
 var logPost = model.Log{}
 var graph []float64
 var absc = make(map[string]interface{})
-var array []interface{}
+var array []DataResp
 
 func checkConnected() config.Process {
 	err, process := config.Connected()
@@ -49,56 +49,53 @@ func checkConnected() config.Process {
 }
 func main() {
 	process := checkConnected()
-	var k int
-	var resp DataResp
-	for k == 10 {
-		logs, err := logPost.FindAllPosts(process.DB)
+	// var k int
+	var resp = DataResp{}
+	// for k == 3 {
+	logs, err := logPost.FindAllPosts(process.DB)
 
-		if err != nil {
-			log.Fatal("error request")
-		}
-
-		if len(*logs) > 0 {
-			var i int
-			var st string
-			for _, val := range *logs {
-				t, _ := time.Parse(time.RFC3339, val.DateRequest)
-				/*absc["id"] = val.Id
-				absc["date"] = t.Format("20060102150405") // timestamp Go
-				absc["apiKey"] = val.ApiKey
-				absc["nameService"] = val.NameService
-				absc["status"] = val.Status*/
-
-				if !val.Status {
-					i = 0 
-					st = "Error"
-					graph = append(graph, float64(i))
-				} else {
-					i = 1
-					st = "Success"
-					graph = append(graph,float64(i))
-				}
-				resp.Id = val.Id	
-				resp.Apikey = val.ApiKey
-				resp.StatusLog = st
-				resp.NameService = val.NameService
-				resp.StatusInit = val.Status
-				resp.DateError = t.Format("20060102150405")
-
-				array = append(array,resp)
-			}
-			traceLogs(graph,array)
-		}
-
-		fmt.Println(k)
-		k++
+	if err != nil {
+		log.Fatal("error request")
 	}
+
+	if len(*logs) > 0 {
+		var i int
+		var st string
+		for _, val := range *logs {
+			t, _ := time.Parse(time.RFC3339, val.DateRequest)
+
+			if !val.Status {
+				i = 0
+				st = "Error"
+				graph = append(graph, float64(i))
+			} else {
+				i = 1
+				st = "Success"
+				graph = append(graph, float64(i))
+			}
+			resp.Id = val.Id
+			resp.Apikey = val.ApiKey
+			resp.StatusLog = st
+			resp.NameService = val.NameService
+			resp.StatusInit = val.Status
+			resp.Date = t.Format("20060102150405")
+
+			array = append(array, resp)
+			fmt.Println("apikey", getNameByApikey(val.ApiKey))
+		}
+		// traceLogs(graph, array)
+		// time.Sleep(600)
+	}
+
+	//fmt.Println(k)
+	// k++
+	// }
 }
 
 func getNameByApikey(apikey string) *model.User {
 	process := checkConnected()
 	var userSend = model.User{}
-	user, err := userSend.FindUser(process.DB,apikey)
+	user, err := userSend.FindUser(process.DB, apikey)
 
 	if err != nil {
 		log.Fatal("error_find_user")
@@ -107,7 +104,7 @@ func getNameByApikey(apikey string) *model.User {
 	return user
 }
 
-func traceLogs(data []float64, array []interface{}) {
+func traceLogs(data []float64, array []DataResp) {
 	if err := ui.Init(); err != nil {
 	}
 	defer ui.Close()
@@ -129,24 +126,24 @@ func traceLogs(data []float64, array []interface{}) {
 	// Client: Harmonie
 	var statutLog string
 
-	for _,val := range array {
+	for _, val := range array {
 		if !val.StatusInit {
 			statutLog = "Error"
-			user := getNameByApikey(val.Apikey)
-			val.Email = *user.Useremail
+			// user := getNameByApikey(val.Apikey)
+			val.Email = "" // *user.Useremail
 		} else {
 			statutLog = "Success"
 		}
-		
+
 		p := widgets.NewParagraph()
-		p.Text = val.DateError
+		p.Text = val.Date
 		p.Text = val.Email
 		p.Text = val.NameService
-		p.Text= statutLog
+		p.Text = statutLog
 		p.SetRect(3, 0, 12, 15)
-		ui.Render(p)	
+		ui.Render(p)
 	}
-	
+
 	// Plot service Direct and Previsualisation
 	p0 := widgets.NewPlot()
 	p0.Title = "Monitore sp-api"
