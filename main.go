@@ -47,7 +47,7 @@ func checkConnected() config.Process {
 
 	return process
 }
-func main() {
+func maingg() {
 	process := checkConnected()
 	// var k int
 	var resp = DataResp{}
@@ -83,9 +83,14 @@ func main() {
 			array = append(array, resp)
 			fmt.Println("apikey", getNameByApikey(val.ApiKey))
 		}
-		// traceLogs(graph, array)
 		// time.Sleep(600)
+	} else {
+		for i :=0; i < 10; i++ {
+			array = append(array,i)	
+		} 
+		
 	}
+	// traceLogs(graph, array)
 
 	//fmt.Println(k)
 	// k++

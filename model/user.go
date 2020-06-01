@@ -20,7 +20,7 @@ func (user *User) TableName() string {
 func (u *User) FindUser(db *gorm.DB, apikey string) (*User, error) {
 	var err error
 	// var res = User{}
-	err = db.Debug().Model(&User{}).Where("user_api_key = ?", apikey).Find(&User{}).Error
+	err = db.Debug().Model(&User{}).Where("user_api_key = ?", apikey).Find(&u).Error
 
 	if err != nil {
 		return &User{}, err
