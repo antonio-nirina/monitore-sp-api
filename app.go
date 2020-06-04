@@ -1,11 +1,13 @@
 package main
 
 import (
-	"fmt"
 	//"io/ioutil"
+
+	"fmt"
 
 	"fyne.io/fyne"
 	"fyne.io/fyne/canvas"
+	"fyne.io/fyne/layout"
 
 	// "fyne.io/fyne/layout"
 	"fyne.io/fyne/app"
@@ -22,17 +24,39 @@ var p = Plot{}
 // var Item []*fyne.MenuItem
 var ap = app.New()
 
-func maindd() {
+func mainff() {
 	size := fyne.NewSize(500, 200)
-	// sizeIn := fyne.NewSize(50,20)
+	sizeEq := fyne.NewSize(10, 10)
+	pos2 := fyne.NewPos(30, 30)
+	pos1 := fyne.NewPos(3, 3)
 	// img, _ := ioutil.ReadFile("output.png")
 	res, _ := fyne.LoadResourceFromPath("output.png")
 	logo := canvas.NewImageFromResource(res)
-	logo.SetMinSize(fyne.NewSize(228, 167))
+	logo.SetMinSize(fyne.NewSize(10, 10))
+	logo.Hide()
 	p.output = widget.NewLabel("")
-	fIt := widget.NewFormItem("text", widget.NewButton("Ok", func() {
-		ap.Quit()
-	}))
+	abs := widget.NewEntry()
+	abs.SetPlaceHolder("Abcisse")
+	abs.Move(pos2)
+	eq := widget.NewEntry()
+	eq.SetPlaceHolder("Equation")
+	eq.Move(pos1)
+	btn := widget.NewButton("show", func() {
+		fmt.Println("Abcisse:", abs.Text)
+		fmt.Println("equation:", eq.Text)
+	})
+	btn.Style = widget.PrimaryButton
+	btnCancel := widget.NewButton("cancel", func() {
+		abs.SetText("")
+		eq.SetText("")
+	})
+	btnCancel.Style = widget.DefaultButton
+	f := widget.NewVBox(abs, eq, layout.NewSpacer())
+	f.Resize(sizeEq)
+	bx := widget.NewHBox(btn, btnCancel, layout.NewSpacer(), layout.NewSpacer())
+	cnt := widget.NewTabContainer(widget.NewTabItem("Equation", f))
+	cnt.Resize(sizeEq)
+	fmt.Println(cnt.Size())
 	w := ap.NewWindow("Hello")
 	w.Resize(size)
 	w.SetMainMenu(createMainMenu())
@@ -41,34 +65,32 @@ func maindd() {
 			widget.NewLabel("Hello Fyne!"),
 			p.output,
 			logo,
-			widget.NewForm(fIt),
-			/*widget.NewButton("Quit", func() {
-				ap.Quit()
-			}),*/
-		))
-
+			cnt,
+			bx,
+		),
+	)
+	// w.SetFullScreen(true)
 	w.ShowAndRun()
 }
 
 func createMainMenu() *fyne.MainMenu {
-	ItemM := fyne.NewMenuItem("Cours", func() {
+	ItemM := fyne.NewMenuItem("SaveAs", func() {
 		widget.NewLabel("Ok ok")
 	})
-	equation := fyne.NewMenuItem("Equation", func() {
+	cut := fyne.NewMenuItem("Cut", func() {
+		widget.NewLabel("Ok ok")
+	})
+	copy := fyne.NewMenuItem("Copy", func() {
 		p.output.SetText("Ok ok")
 	})
-	plot := fyne.NewMenuItem("Plot", func() {
-		fmt.Println("Ok Ok")
-	})
-	helper := fyne.NewMenuItem("Plot", func() {
+	helper := fyne.NewMenuItem("Preference", func() {
 		p.output.SetText("L'aide ....")
 	})
 	// Item = append(Item,ItemM,equation,plot)
-	menu1 := fyne.NewMenu("Menu", ItemM)
-	menu2 := fyne.NewMenu("equation", equation)
-	menu3 := fyne.NewMenu("graphique", plot)
+	menu1 := fyne.NewMenu("File", ItemM)
+	menu2 := fyne.NewMenu("Edit", copy, cut)
 	menu4 := fyne.NewMenu("Help", helper)
-	main := fyne.NewMainMenu(menu1, menu2, menu3, menu4)
+	main := fyne.NewMainMenu(menu1, menu2, menu4)
 
 	return main
 }
