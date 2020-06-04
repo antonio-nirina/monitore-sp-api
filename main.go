@@ -81,9 +81,8 @@ func main() {
 			resp.Date = t.Format("20060102150405")
 
 			array = append(array, resp)
-			fmt.Println("apikey", getNameByApikey(val.ApiKey))
 		}
-		// traceLogs(graph, array)
+		traceLogs(graph, array)
 		// time.Sleep(600)
 	}
 
@@ -129,26 +128,35 @@ func traceLogs(data []float64, array []DataResp) {
 	for _, val := range array {
 		if !val.StatusInit {
 			statutLog = "Error"
-			// user := getNameByApikey(val.Apikey)
-			val.Email = "" // *user.Useremail
+			user := getNameByApikey(val.Apikey)
+			val.Email = user.Useremail
 		} else {
 			statutLog = "Success"
 		}
 
 		p := widgets.NewParagraph()
-		p.Text = val.Date
-		p.Text = val.Email
-		p.Text = val.NameService
+		d := widgets.NewParagraph()
+		em := widgets.NewParagraph()
+		serv := widgets.NewParagraph()
+		d.Text = "Date: " + val.Date
+		em.Text = "Email: " + val.Email
+		serv.Text = "Service: " + val.NameService
 		p.Text = statutLog
-		p.SetRect(3, 0, 12, 15)
+		p.SetRect(3, 0, 12, 3)
 		ui.Render(p)
+		d.SetRect(3, 5, 12, 3)
+		ui.Render(d)
+		em.SetRect(3, 2, 12, 3)
+		ui.Render(em)
+		serv.SetRect(3, 2, 12, 3)
+		ui.Render(serv)
 	}
 
 	// Plot service Direct and Previsualisation
 	p0 := widgets.NewPlot()
 	p0.Title = "Monitore sp-api"
 	p0.Data = Data
-	p0.SetRect(13, 0, 60, 15)
+	p0.SetRect(19, 0, 60, 15)
 	p0.AxesColor = ui.ColorWhite
 	p0.LineColors[0] = ui.ColorRed
 	ui.Render(p0)
