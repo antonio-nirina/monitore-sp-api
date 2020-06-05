@@ -47,7 +47,7 @@ func checkConnected() config.Process {
 
 	return process
 }
-func main() {
+func mainjj() {
 	process := checkConnected()
 	// var k int
 	var resp = DataResp{}
