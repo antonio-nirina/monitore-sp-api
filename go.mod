@@ -10,9 +10,9 @@ require (
 	github.com/alecthomas/units v0.0.0-20190924025748-f65c72e2690d // indirect
 	github.com/andrew-d/go-termutil v0.0.0-20150726205930-009166a695a2 // indirect
 	github.com/atsaki/termeter v0.0.0-20151112153352-89591993d4ae // indirect
+	github.com/aws/aws-sdk-go v1.31.11 // indirect
 	github.com/fyne-io/examples v0.0.0-20200516201522-4bcb94be4ee2
 	github.com/gizak/termui/v3 v3.1.0
-	github.com/go-sql-driver/mysql v1.5.0 // indirect
 	github.com/gorilla/mux v1.7.4
 	github.com/graphql-go/graphql v0.7.9
 	github.com/graphql-go/handler v0.2.3
