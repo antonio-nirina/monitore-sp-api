@@ -19,6 +19,7 @@ github.com/atsaki/termeter v0.0.0-20151112153352-89591993d4ae h1:tR2d6cROPilRRh8
 github.com/atsaki/termeter v0.0.0-20151112153352-89591993d4ae/go.mod h1:EBg1HK69NgR7nvspYkJ4nsG9cqmnGm8jkUTUWhBbrnI=
 github.com/aws/aws-sdk-go v1.31.11 h1:Uz7VGg3giOV9Z4SlLdXO6RHafArHbK59vSc6mnzYjGU=
 github.com/aws/aws-sdk-go v1.31.11/go.mod h1:5zCpMtNQVjRREroY7sYe8lOMRSxkhG6MZveU8YkpAk0=
+github.com/aws/aws-sdk-go v1.31.13 h1:UeWMTRTL0XAKLR7vxDL4/u7KOtz/LtfJr+lXtxN4YEQ=
 github.com/aws/aws-sdk-go-v2 v0.23.0 h1:+E1q1LLSfHSDn/DzOtdJOX+pLZE2HiNV2yO5AjZINwM=
 github.com/aws/aws-sdk-go-v2 v0.23.0/go.mod h1:2LhT7UgHOXK3UXONKI5OMgIyoQL6zTAw/jwIeX6yqzw=
 github.com/davecgh/go-spew v1.1.0 h1:ZDRjVQ15GmhC3fiQ8ni8+OwkZQO4DARzQgrnXU1Liz8=

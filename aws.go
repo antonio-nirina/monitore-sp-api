@@ -3,12 +3,14 @@ package main
 import (
 	"fmt"
 	"log"
+
+	// "log"
 	"os"
 
-	"github.com/aws/aws-sdk-go-v2/aws"
-	"github.com/aws/aws-sdk-go-v2/aws/external"
-	"github.com/aws/aws-sdk-go-v2/service/s3"
-	"github.com/aws/aws-sdk-go-v2/service/s3/s3manager"
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/session"
+	"github.com/aws/aws-sdk-go/service/s3"
+	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 	"github.com/joho/godotenv"
 )
 
@@ -19,29 +21,25 @@ func main() {
 		log.Fatal("Error loading .env file")
 	}
 
-	/*cf := aws.Credentials{
-		AccessKeyID:     os.Getenv("AWS_ACCESS_KEY_ID"),
-		SecretAccessKey: os.Getenv("AWS_SECRET_ACCESS_KEY"),
-	}*/
 	bucket := os.Getenv("FILE_CONVERTER")
-	filename := "test.docx"
-	key := "test_converter.docx"
-	cfg, err := external.LoadDefaultAWSConfig()
-
-	downloader := s3manager.NewDownloader(cfg)
-	// Create a file to write the S3 Object contents to.
+	filename := "test"
+	sess := session.Must(session.NewSession(&aws.Config{
+		Region: aws.String("eu-west-2"),
+	}))
 	f, err := os.Create(filename)
-	if err != nil {
-		log.Fatal(err)
-	}
 
-	// Write the contents of S3 Object to the file
+	if err != nil {
+		fmt.Println("failed to create file", filename, err)
+	}
+	// svc := s3.New(sess)
+	// res, err := svc.ListBuckets(nil)
+	downloader := s3manager.NewDownloader(sess)
 	n, err := downloader.Download(f, &s3.GetObjectInput{
 		Bucket: aws.String(bucket),
-		Key:    aws.String(key),
+		//Key:    aws.String(myString),
 	})
 	if err != nil {
-		log.Fatal(err)
+		fmt.Println("failed to download file", err)
 	}
 	fmt.Printf("file downloaded, %d bytes\n", n)
 
