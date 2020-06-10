@@ -14,7 +14,7 @@ import (
 	"github.com/joho/godotenv"
 )
 
-func main() {
+func mainaaw() {
 	err := godotenv.Load()
 
 	if err != nil {
