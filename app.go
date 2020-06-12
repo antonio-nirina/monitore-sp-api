@@ -27,7 +27,7 @@ var w = ap.NewWindow("Hello")
 var size = fyne.NewSize(500, 200)
 var sizeEq = fyne.NewSize(10, 10)
 
-func main() {
+func mainlll() {
 	// img, _ := ioutil.ReadFile("output.png")
 	p.output = widget.NewLabel("")
 	// cnt.Resize(sizeEq)
