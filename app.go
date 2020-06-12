@@ -4,6 +4,7 @@ import (
 	//"io/ioutil"
 
 	"fmt"
+
 	"fyne.io/fyne"
 	"fyne.io/fyne/canvas"
 	"fyne.io/fyne/layout"
@@ -16,7 +17,7 @@ import (
 
 type Plot struct {
 	output *widget.Label
-	main fyne.Widget
+	main   fyne.Widget
 }
 
 var p = Plot{}
@@ -54,7 +55,7 @@ func createMainMenu() *fyne.MainMenu {
 	})
 	helper := fyne.NewMenuItem("Preference", func() {
 		p.output.SetText("Select theme")
-		selected := widget.NewSelect([]string{"LigthTheme","DarkTheme"}, func(s string) {
+		selected := widget.NewSelect([]string{"LigthTheme", "DarkTheme"}, func(s string) {
 			if s == "LigthTheme" {
 				ap.Settings().SetTheme(theme.LightTheme())
 			} else {
@@ -71,9 +72,9 @@ func createMainMenu() *fyne.MainMenu {
 			widget.NewVBox(
 				widget.NewLabel("preference"),
 				selected,
-				widget.NewHBox(back,),
-				),
-			)
+				widget.NewHBox(back),
+			),
+		)
 	})
 	// Item = append(Item,ItemM,equation,plot)
 	menu1 := fyne.NewMenu("File", ItemM)
@@ -84,7 +85,7 @@ func createMainMenu() *fyne.MainMenu {
 	return main
 }
 
-func mainScreen() fyne.Widget{
+func mainScreen() fyne.Widget {
 	pos2 := fyne.NewPos(30, 30)
 	pos1 := fyne.NewPos(3, 3)
 	res, _ := fyne.LoadResourceFromPath("output.png")
