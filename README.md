@@ -3,6 +3,7 @@
 https://github.com/atsaki/termeter
 https://github.com/zupzup/example-go-graphql
 https://github.com/eko/graphql-go-structure
+https://github.com/ajaxray/geek-life
 
 https://github.com/kathgironpe/cpp-exercises
 

@@ -22,6 +22,7 @@ require (
 	github.com/joho/godotenv v1.3.0
 	github.com/mattn/go-runewidth v0.0.9 // indirect
 	github.com/nsf/termbox-go v0.0.0-20200418040025-38ba6e5628f1 // indirect
+	github.com/pgavlin/femto v0.0.0-20191028012355-31a9964a50b5 // indirect
 	github.com/rivo/tview v0.0.0-20200528200248-fe953220389f
 	github.com/wcharczuk/go-chart v2.0.1+incompatible // indirect
 	golang.org/x/image v0.0.0-20200430140353-33d19683fad8 // indirect
