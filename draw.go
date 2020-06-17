@@ -19,14 +19,17 @@ const pageCount = 2
 
 func main() {
 	app = tview.NewApplication()
-	task = tview.NewTextView().SetDynamicColors(true)
+	task = tview.NewTextView()
 	taskDateDisplay = tview.NewTextView()
+	taskDateDisplay.SetText("Text")
+	taskDateDisplay.SetBorder(true)
+	taskDateDisplay.SetTitle("[red::b] Errors")
+	task.SetTitle("[green::b] Data")
+	task.SetBorder(true)
+	task.SetText("")
 	flex := tview.NewFlex()
-	flex.AddItem(taskDateDisplay.SetText("Error"),0,1,false).
-		SetBorder(true).SetTitle("Error")
-		//tview.NewBox().SetBorder(true).SetTitle("[red::b] List Error"), 40, 1, false)
-	// flex.AddItem(tview.NewBox().SetBorder(true).SetTitle("[green::b] Data"), 0, 1, false)
-	flex.AddItem(task.SetText("Text"),0,1,false).SetBorder(true).SetTitle("Data")
+	flex.AddItem(taskDateDisplay,30,1,true)
+	flex.AddItem(task,0,1,true)
 	if err := app.SetRoot(flex, true).SetFocus(flex).Run(); err != nil {
 		panic(err)
 	}
