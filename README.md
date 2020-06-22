@@ -13,4 +13,5 @@ https://github.com/videolan/vlc
 https://medium.com/better-programming/10-extraordinary-github-repos-for-all-developers-939cdeb28ad0
 #### Books:
 https://github.com/giabao/books-1?fbclid=IwAR1D4tx7kAWqARuFI_mRscJ8lQ1M-pRbyHHsbtwjs4A-12i3tPfTpDTi49Y
+https://github.com/Masterminds/go-in-practice
 
