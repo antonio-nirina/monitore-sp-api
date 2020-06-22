@@ -3,9 +3,65 @@ package main
 import (
 	"fmt"
 	"log"
+	"strings"
 
 	"github.com/jroimartin/gocui"
 )
+
+const noteText = `KEYBINDINGS
+Monotoring Log Sp-Api
+TAB: CHECK STATUS SERVICE
+^C: Exit
+`
+
+type xWidget struct {
+	name string
+	x, y int
+	w, h int
+	body string
+}
+
+type xDataList struct {
+	name string
+	x, y int
+	w, h int
+	body string
+}
+
+func newNotice(title string, x, y int, body string) *xWidget {
+	lines := strings.Split(body, "\n")
+	w := 0
+	for _, l := range lines {
+		if len(l) > w {
+			w = len(l)
+		}
+	}
+	h := len(lines) + 1
+	w = w + 1
+	var xW xWidget
+	xW.name = title
+	xW.x = x
+	xW.h = h
+	xW.w = w
+	xW.body = body
+	xW.y = y
+
+	return &xW
+}
+
+func listDataLog(title string, x, y int, body string) *xDataList {
+	var xd xDataList
+	var w xWidget
+	fmt.Println(w.w)
+	xd.body = body
+	xd.name = title
+	xd.h = 10
+	xd.x = x
+	xd.y = y
+	xd.w = 30
+
+	return &xd
+}
 
 func main() {
 	g, err := gocui.NewGui(gocui.OutputNormal)
@@ -13,8 +69,11 @@ func main() {
 		log.Panicln(err)
 	}
 	defer g.Close()
-
-	g.SetManagerFunc(layout)
+	g.Highlight = true
+	g.SelFgColor = gocui.ColorRed
+	notice := newNotice("Monitore Sp-api", 1, 0, noteText)
+	layout := listDataLog("Logrus", 30, 0, "List Api")
+	g.SetManager(notice, layout)
 
 	if err := g.SetKeybinding("", gocui.KeyCtrlC, gocui.ModNone, quit); err != nil {
 		log.Panicln(err)
@@ -25,17 +84,24 @@ func main() {
 	}
 }
 
-func layout(g *gocui.Gui) error {
-	maxX, maxY := g.Size()
-	if v, err := g.SetView("colors", maxX/2-7, maxY/2-12, maxX/2+7, maxY/2+13); err != nil {
+func (w *xWidget) Layout(g *gocui.Gui) error {
+	v, err := g.SetView(w.name, w.x, w.y, w.x+w.w, w.y+w.h)
+	if err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
-		for i := 0; i <= 7; i++ {
-			for _, j := range []int{1, 4, 7} {
-				fmt.Fprintf(v, "Hello \033[3%d;%dmcolors!\033[0m\n", i, j)
-			}
+		fmt.Fprint(v, w.body)
+	}
+	return nil
+}
+
+func (d *xDataList) Layout(g *gocui.Gui) error {
+	v, err := g.SetView(d.name, d.x, d.y, d.x+d.w, d.y+d.h)
+	if err != nil {
+		if err != gocui.ErrUnknownView {
+			return err
 		}
+		fmt.Fprint(v, d.body)
 	}
 	return nil
 }

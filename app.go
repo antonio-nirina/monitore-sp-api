@@ -7,11 +7,11 @@ import (
 
 	"fyne.io/fyne"
 	"fyne.io/fyne/canvas"
-	"fyne.io/fyne/layout"
+	ly "fyne.io/fyne/layout"
 	"fyne.io/fyne/theme"
 
 	// "fyne.io/fyne/layout"
-	"fyne.io/fyne/app"
+	app1 "fyne.io/fyne/app"
 	"fyne.io/fyne/widget"
 )
 
@@ -23,7 +23,7 @@ type Plot struct {
 var p = Plot{}
 
 // var Item []*fyne.MenuItem
-var ap = app.New()
+var ap = app1.New()
 var w = ap.NewWindow("Hello")
 var size = fyne.NewSize(500, 200)
 var sizeEq = fyne.NewSize(10, 10)
@@ -98,7 +98,7 @@ func mainScreen() fyne.Widget {
 	eq := widget.NewEntry()
 	eq.SetPlaceHolder("Equation")
 	eq.Move(pos1)
-	f := widget.NewVBox(abs, eq, layout.NewSpacer())
+	f := widget.NewVBox(abs, eq, ly.NewSpacer())
 	f.Resize(sizeEq)
 	cnt := widget.NewTabContainer(widget.NewTabItem("Equation", f))
 	btn := widget.NewButton("show", func() {
@@ -111,7 +111,7 @@ func mainScreen() fyne.Widget {
 		eq.SetText("")
 	})
 	btnCancel.Style = widget.DefaultButton
-	bx := widget.NewHBox(btn, btnCancel, layout.NewSpacer(), layout.NewSpacer())
+	bx := widget.NewHBox(btn, btnCancel, ly.NewSpacer(), ly.NewSpacer())
 	main := widget.NewVBox(
 		widget.NewLabel("Hello Fyne!"),
 		p.output,
