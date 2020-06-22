@@ -20,6 +20,7 @@ require (
 	github.com/graphql-go/handler v0.2.3 // indirect
 	github.com/jinzhu/gorm v1.9.12
 	github.com/joho/godotenv v1.3.0
+	github.com/jroimartin/gocui v0.4.0
 	github.com/mattn/go-runewidth v0.0.9 // indirect
 	github.com/nsf/termbox-go v0.0.0-20200418040025-38ba6e5628f1 // indirect
 	github.com/pgavlin/femto v0.0.0-20191028012355-31a9964a50b5 // indirect
