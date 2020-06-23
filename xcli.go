@@ -28,6 +28,9 @@ type xDataList struct {
 	body string
 }
 
+var xd xDataList
+var xW xWidget
+
 func newNotice(title string, x, y int, body string) *xWidget {
 	lines := strings.Split(body, "\n")
 	w := 0
@@ -38,7 +41,7 @@ func newNotice(title string, x, y int, body string) *xWidget {
 	}
 	h := len(lines) + 1
 	w = w + 1
-	var xW xWidget
+	
 	xW.name = title
 	xW.x = x
 	xW.h = h
@@ -50,15 +53,12 @@ func newNotice(title string, x, y int, body string) *xWidget {
 }
 
 func listDataLog(title string, x, y int, body string) *xDataList {
-	var xd xDataList
-	var w xWidget
-	fmt.Println(w.w)
 	xd.body = body
 	xd.name = title
 	xd.h = 10
 	xd.x = x
 	xd.y = y
-	xd.w = 30
+	xd.w = 100
 
 	return &xd
 }
@@ -69,7 +69,7 @@ func main() {
 		log.Panicln(err)
 	}
 	defer g.Close()
-	g.Highlight = true
+	g.Highlight = false
 	g.SelFgColor = gocui.ColorRed
 	notice := newNotice("Monitore Sp-api", 1, 0, noteText)
 	layout := listDataLog("Logrus", 30, 0, "List Api")
