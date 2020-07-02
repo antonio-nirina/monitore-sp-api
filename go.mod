@@ -12,6 +12,7 @@ require (
 	github.com/atsaki/termeter v0.0.0-20151112153352-89591993d4ae // indirect
 	github.com/aws/aws-sdk-go v1.31.11
 	github.com/aws/aws-sdk-go-v2 v0.23.0
+	github.com/fatih/color v1.9.0
 	github.com/fyne-io/examples v0.0.0-20200516201522-4bcb94be4ee2
 	github.com/gdamore/tcell v1.3.0
 	github.com/gizak/termui/v3 v3.1.0
