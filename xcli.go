@@ -10,7 +10,7 @@ import (
 
 const noteText = `KEYBINDINGS
 Monotoring Log Sp-Api
-TAB: CHECK STATUS SERVICE
+CHECK STATUS SERVICE
 ^C: Exit
 `
 
@@ -62,6 +62,45 @@ func listDataLog(title string, x, y int, body string) *xDataList {
 
 	return &xd
 }
+func downKey(g *gocui.Gui, v *gocui.View) error {
+	if v != nil {
+		cx, cy := v.Cursor()
+		if err := v.SetCursor(cx, cy+1); err != nil {
+			ox, oy := v.Origin()
+			if err := v.SetOrigin(ox, oy+1); err != nil {
+				return err
+			}
+		}
+	}
+	return nil
+}
+
+func upKey(g *gocui.Gui, v *gocui.View) error {
+	if v != nil {
+		ox, oy := v.Origin()
+		cx, cy := v.Cursor()
+		if err := v.SetCursor(cx, cy-1); err != nil && oy > 0 {
+			if err := v.SetOrigin(ox, oy-1); err != nil {
+				return err
+			}
+		}
+	}
+	return nil
+}
+
+func keypressing(g *gocui.Gui) error {
+	if err := g.SetKeybinding("side", gocui.KeyArrowDown, gocui.ModNone, downKey); err != nil {
+		return err
+	}
+	if err := g.SetKeybinding("side", gocui.KeyArrowUp, gocui.ModNone, upKey); err != nil {
+		return err
+	}
+	if err := g.SetKeybinding("", gocui.KeyCtrlC, gocui.ModNone, quit); err != nil {
+		return err
+	}
+
+	return nil
+}
 
 func main() {
 	g, err := gocui.NewGui(gocui.OutputNormal)
@@ -75,7 +114,7 @@ func main() {
 	layout := listDataLog("Logrus", 30, 0, "List Api")
 	g.SetManager(notice, layout)
 
-	if err := g.SetKeybinding("", gocui.KeyCtrlC, gocui.ModNone, quit); err != nil {
+	if err := keypressing(g); err != nil {
 		log.Panicln(err)
 	}
 
@@ -86,6 +125,7 @@ func main() {
 
 func (w *xWidget) Layout(g *gocui.Gui) error {
 	//_, maxY := g.Size()
+	wdt := w.x + w.w
 	v, err := g.SetView(w.name, w.x, w.y, w.x+w.w, w.y+w.h)
 	if err != nil {
 		if err != gocui.ErrUnknownView {
@@ -94,7 +134,7 @@ func (w *xWidget) Layout(g *gocui.Gui) error {
 		fmt.Fprint(v, w.body)
 	}
 
-	if v, err := g.SetView("side", 1, 8, w.x+w.w, w.y+w.h); err != nil {
+	if v, err := g.SetView("side", 1, 8, wdt, 20); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
@@ -105,7 +145,6 @@ func (w *xWidget) Layout(g *gocui.Gui) error {
 		fmt.Fprintln(v, "Item 1")
 		fmt.Fprintln(v, "Item 2")
 		fmt.Fprintln(v, "Item 3")
-		fmt.Fprint(v, "\rWill be")
 		fmt.Fprint(v, "deleted\rItem 4\nItem 5")
 	}
 	return nil
@@ -119,7 +158,7 @@ func (d *xDataList) Layout(g *gocui.Gui) error {
 		}
 		fmt.Fprint(v, d.body)
 	}
-	v.Title = "Success"
+	v.Title = "Details"
 	return nil
 }
 
