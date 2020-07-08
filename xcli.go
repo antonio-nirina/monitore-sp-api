@@ -15,7 +15,7 @@ CHECK STATUS SERVICE
 
 type result struct {
 	st []string
-	view *gocui.Gui
+	view *gocui.View
 }
 
 type helpStatus struct {
@@ -41,7 +41,7 @@ func main() {
 		log.Panicln(err)
 	}
 
-	if err := g.SetKeybinding("", gocui.KeyArrowDown, gocui.ModNone, setListStatus(-1)); err != nil {
+	if err := g.SetKeybinding("", gocui.KeyArrowUp, gocui.ModNone, setListStatus(-1)); err != nil {
 			log.Panicln(err)
 	}
 
@@ -98,13 +98,17 @@ func sizeTitle() (int,int) {
 
 func setListStatus(d int) func(g *gocui.Gui, v *gocui.View) error {
 	return func(g *gocui.Gui, v *gocui.View) error {
+		count := 0
 		if hl.y < len(res.st) && d == 1 {
-			hl.y++
+			count++
+			// hl.y = hl.y+1
 		}
 		if hl.y > len(res.st) && d == -1{
-			hl.y--
+			hl.y = hl.y-1
 		}
-		setState(v)
+		hl.y = count
+		fmt.Println(count)
+		// setState(res.view)
 		return nil
 	}
 }
@@ -113,6 +117,7 @@ func setState(vs *gocui.View) {
 	vs.SelBgColor = gocui.ColorGreen
 	vs.SelFgColor = gocui.ColorRed
 	vs.SetCursor(hl.x,hl.y)
+	res.view = vs
 	for _,val := range res.st {
 		fmt.Fprintln(vs, val)
 	}
