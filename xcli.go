@@ -21,6 +21,7 @@ type result struct {
 type helpStatus struct {
 	x int
 	y int 
+	count int
 }
 var res result
 var hl helpStatus
@@ -77,7 +78,7 @@ func layout(g *gocui.Gui) error {
 			return err
 		}
 		v.Title = "Log"
-		fmt.Fprintln(v, "Data")
+		setContent(v)
 	}
 	return nil
 }
@@ -98,17 +99,18 @@ func sizeTitle() (int,int) {
 
 func setListStatus(d int) func(g *gocui.Gui, v *gocui.View) error {
 	return func(g *gocui.Gui, v *gocui.View) error {
-		count := 0
-		if hl.y < len(res.st) && d == 1 {
-			count++
-			// hl.y = hl.y+1
+		if hl.count < len(res.st) {
+			if  d == 1 {
+				hl.count = hl.count+1
+				hl.y = hl.count
+			}
 		}
-		if hl.y > len(res.st) && d == -1{
-			hl.y = hl.y-1
+		if hl.count <= len(res.st) && d == -1 && hl.count > 0{
+			hl.count = hl.count-1
+			hl.y = hl.count
 		}
-		hl.y = count
-		fmt.Println(count)
-		// setState(res.view)
+		
+		setState(res.view)
 		return nil
 	}
 }
@@ -121,6 +123,10 @@ func setState(vs *gocui.View) {
 	for _,val := range res.st {
 		fmt.Fprintln(vs, val)
 	}
+}
+
+func setContent(v *gocui.View) {
+	fmt.Fprintln(v, "Data")
 }
 
 
