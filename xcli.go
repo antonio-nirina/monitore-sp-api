@@ -18,13 +18,19 @@ type result struct {
 	view *gocui.View
 }
 
+type contentCs struct {
+	viewCs *gocui.View
+}
+
 type helpStatus struct {
 	x int
 	y int 
 	count int
 }
 var res result
+var cs contentCs
 var hl helpStatus
+
 func main() {
 	g, err := gocui.NewGui(gocui.OutputNormal)
 	if err != nil {
@@ -73,11 +79,20 @@ func layout(g *gocui.Gui) error {
 		v.Highlight = true
 		setState(v)
 	}
-	if v, err := g.SetView("Log", w+2, 0, 50, 10); err != nil {
+
+	if v, err := g.SetView("LogAll", w+2, 0, 100, 3); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
 		v.Title = "Log"
+		fmt.Fprintln(v, `Id  	Date&times  	Status  	Apikey  	Message 	Name service`)
+	}
+
+	if v, err := g.SetView(" ", w+2, 4, 100, 30); err != nil {
+		if err != gocui.ErrUnknownView {
+			return err
+		}
+
 		setContent(v)
 	}
 	return nil
@@ -109,8 +124,10 @@ func setListStatus(d int) func(g *gocui.Gui, v *gocui.View) error {
 			hl.count = hl.count-1
 			hl.y = hl.count
 		}
-		
+
+		setContent(cs.viewCs)
 		setState(res.view)
+		
 		return nil
 	}
 }
@@ -125,8 +142,10 @@ func setState(vs *gocui.View) {
 	}
 }
 
-func setContent(v *gocui.View) {
-	fmt.Fprintln(v, "Data")
+func setContent(dv *gocui.View) {
+	cs.viewCs = dv
+	dv.Clear()
+	fmt.Fprintln(dv, hl.count)
 }
 
 
