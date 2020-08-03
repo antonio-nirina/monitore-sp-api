@@ -23,6 +23,7 @@ https://medium.com/better-programming/10-extraordinary-github-repos-for-all-deve
 https://github.com/giabao/books-1?fbclid=IwAR1D4tx7kAWqARuFI_mRscJ8lQ1M-pRbyHHsbtwjs4A-12i3tPfTpDTi49Y
 
 https://github.com/Masterminds/go-in-practice
+https://medium.com/@nqbao/writing-a-chat-server-in-go-3b61ccc2a8ed
 
 
 
